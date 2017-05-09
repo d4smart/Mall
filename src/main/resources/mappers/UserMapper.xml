@@ -188,8 +188,8 @@
 
   <update id="updatePasswordByUsername" parameterType="map" >
     update mall_user
-    set password = #{newPassword}
-    where username = #{username}, update_time = now()
+    set password = #{newPassword}, update_time = now()
+    where username = #{username}
   </update>
   
   <select id="checkPassword" parameterType="map" resultType="int" >
