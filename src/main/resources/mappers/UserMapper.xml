@@ -185,4 +185,26 @@
     and question = #{question}
     and answer = #{answer}
   </select>
+
+  <update id="updatePasswordByUsername" parameterType="map" >
+    update mall_user
+    set password = #{newPassword}
+    where username = #{username}, update_time = now()
+  </update>
+  
+  <select id="checkPassword" parameterType="map" resultType="int" >
+    select
+    count(1)
+    from mall_user
+    where id = #{userId}
+    and password = #{password}
+  </select>
+  
+  <select id="checkEmailByUserId" parameterType="map" resultType="int" >
+    select
+    count(1)
+    from mall_user
+    where email = #{email}
+    and id != #{userId}
+  </select>
 </mapper>
