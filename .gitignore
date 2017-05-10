@@ -16,6 +16,7 @@ target/
 
 # temp file
 *.log
+*.gz
 *.cache
 *.diff
 *.patch

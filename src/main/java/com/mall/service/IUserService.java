@@ -28,4 +28,6 @@ public interface IUserService {
 
     ServerResponse<User> getUserInfo(int userId);
 
+    ServerResponse isAdmin(User user);
+
 }
