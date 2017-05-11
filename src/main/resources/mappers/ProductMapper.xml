@@ -183,4 +183,18 @@
     from mall_product
     order by id asc
   </select>
+  
+  <select id="selectByNameAndId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from mall_product
+    <where>
+      <if test="name != null">
+        and name like #{name}
+      </if>
+      <if test="id != null">
+        and id = #{id}
+      </if>
+    </where>
+  </select>
 </mapper>
