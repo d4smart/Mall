@@ -7,7 +7,6 @@ import com.mall.dao.UserMapper;
 import com.mall.pojo.User;
 import com.mall.service.IUserService;
 import com.mall.util.MD5Util;
-import org.apache.commons.configuration.plist.Token;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

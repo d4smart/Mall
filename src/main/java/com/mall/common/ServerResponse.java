@@ -6,7 +6,9 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import java.io.Serializable;
 
 /**
- * Created by d4smart on 2017/5/8.
+ * @author d4smart
+ * @email d4smart@foxmail.com
+ * Created on 2017/5/8 18:28.
  */
 // 序列化json的时候，如果是null的对象，key也会消失
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
