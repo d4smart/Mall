@@ -79,7 +79,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @param integer id
      * @return List
      */
-    public ServerResponse getChildrenCategoryRecursive(Integer id) {
+    public ServerResponse<List<Integer>> getChildrenCategoryRecursive(Integer id) {
         Set<Category> categories = Sets.newHashSet();
         findChildCategory(categories, id);
 
