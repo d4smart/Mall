@@ -14,7 +14,6 @@ import com.mall.util.BigDecimalUtil;
 import com.mall.util.PropertiesUtil;
 import com.mall.vo.CartProductVo;
 import com.mall.vo.CartVo;
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,10 +79,10 @@ public class CartServiceImpl implements ICartService {
         }
 
         Cart cart = cartMapper.selectByUserIdAndProductId(userId, productId);
-        if(cart == null) {
+        if(cart != null) {
             cart.setQuantity(count);
+            cartMapper.updateByPrimaryKeySelective(cart);
         }
-        cartMapper.updateByPrimaryKeySelective(cart);
         return this.list(userId);
     }
 
@@ -98,7 +97,7 @@ public class CartServiceImpl implements ICartService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
-        cartMapper.deleteByUserIdProductIds(userId, productIds);
+        cartMapper.deleteByUserIdProductIds(userId, productList);
         return this.list(userId);
     }
 
