@@ -1,0 +1,9 @@
+# mall配置文件示例（本机配置基于windows）
+ftp.server.ip=127.0.0.1 // ftp服务器的ip
+ftp.user=d4smart // ftp用户名
+ftp.pass=654123 // ftp密码
+ftp.server.http.prefix=http://img.mall.d4smarter.com/ // ftp服务器的http路径
+
+alipay.callback.url=http://juhcs3.natappfree.cc/order/alipay_callback.do // 支付宝回调地址
+
+password.salt = geed4smart23ou89ZXcj@#$@#$#@Kxp96exr;D../dSF. // 密码的盐值

@@ -1,5 +1,8 @@
 *.class
 
+# properties file
+*.properties
+
 # package file
 *.jar
 *.war

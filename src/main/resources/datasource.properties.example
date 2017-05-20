@@ -1,0 +1,16 @@
+# 数据库驱动的位置
+db.driverLocation=C:/Users/23037/.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar
+db.driverClassName=com.mysql.jdbc.Driver // 类名
+db.url=jdbc:mysql://127.0.0.1:3306/mall?characterEncoding=utf-8 // 连接地址
+# 用户名，密码
+db.username=root
+db.password=9d6mwhs7
+
+# 数据库连接池配置
+db.initialSize = 20
+db.maxActive = 50
+db.maxIdle = 20
+db.minIdle = 10
+db.maxWait = 10
+db.defaultAutoCommit = true
+db.minEvictableIdleTimeMillis = 3600000
