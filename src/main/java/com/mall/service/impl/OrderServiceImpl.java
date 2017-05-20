@@ -12,13 +12,17 @@ import com.alipay.demo.trade.service.impl.AlipayTradeServiceImpl;
 import com.alipay.demo.trade.utils.ZxingUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mall.common.Const;
 import com.mall.common.ServerResponse;
 import com.mall.dao.OrderItemMapper;
 import com.mall.dao.OrderMapper;
+import com.mall.dao.PayInfoMapper;
 import com.mall.pojo.Order;
 import com.mall.pojo.OrderItem;
+import com.mall.pojo.PayInfo;
 import com.mall.service.IOrderService;
 import com.mall.util.BigDecimalUtil;
+import com.mall.util.DateTimeUtil;
 import com.mall.util.FTPUtil;
 import com.mall.util.PropertiesUtil;
 import org.apache.commons.lang.StringUtils;
@@ -48,6 +52,9 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private OrderItemMapper orderItemMapper;
+
+    @Autowired
+    private PayInfoMapper payInfoMapper;
 
     public ServerResponse pay(Long orderNumber, Integer userId, String path) {
         Map<String, String> resultMap = Maps.newHashMap();
@@ -178,6 +185,49 @@ public class OrderServiceImpl implements IOrderService {
                         response.getSubMsg()));
             }
             logger.info("body:" + response.getBody());
+        }
+    }
+
+    public ServerResponse alipayCallBack(Map<String, String> params) {
+        Long orderNo = Long.parseLong(params.get("out_trade_no"));
+        String tradeNo = params.get("trade_no");
+        String tradeStatus = params.get("trade_status");
+
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if(order == null) {
+            return ServerResponse.createByErrorMessage("非本平台的订单号，回调忽略");
+        }
+
+        if(order.getStatus() >= Const.OrderStatus.PAID.getCode()) {
+            return ServerResponse.createBySuccess("支付宝重复调用");
+        }
+        if(Const.AlipayCallback.TRADE_SUCCESS.equals(tradeStatus)) {
+            order.setPaymentTime(DateTimeUtil.strToDate(params.get("gmt_payment")));
+            order.setStatus(Const.OrderStatus.PAID.getCode());
+            orderMapper.updateByPrimaryKeySelective(order);
+        }
+
+        PayInfo payInfo = new PayInfo();
+        payInfo.setUserId(order.getUserId());
+        payInfo.setOrderNo(order.getOrderNo());
+        payInfo.setPayPlatform(Const.PayPlatform.ALIPAY.getCode());
+        payInfo.setPlatformNumber(tradeNo);
+        payInfo.setPlatformStatus(tradeStatus);
+        payInfoMapper.insert(payInfo);
+
+        return ServerResponse.createBySuccess();
+    }
+
+    public ServerResponse getPayStatus(Integer userId, Long orderNunber) {
+        Order order = orderMapper.selectByOrderNumberUserId(orderNunber, userId);
+        if(order == null) {
+            return ServerResponse.createByErrorMessage("用户没有该订单");
+        }
+
+        if(order.getStatus() >= Const.OrderStatus.PAID.getCode()) {
+            return ServerResponse.createBySuccess();
+        } else {
+            return ServerResponse.createByError();
         }
     }
 }
