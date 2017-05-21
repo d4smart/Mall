@@ -84,6 +84,15 @@ public class Const {
         public void setValue(String value) {
             this.value = value;
         }
+
+        public static OrderStatus codeOf(int code) {
+            for(OrderStatus orderStatus : values()) {
+                if(orderStatus.getCode() == code) {
+                    return orderStatus;
+                }
+            }
+            throw new RuntimeException("没有找到对应的枚举");
+        }
     }
 
     public interface AlipayCallback {
@@ -119,6 +128,43 @@ public class Const {
 
         public void setValue(String value) {
             this.value = value;
+        }
+    }
+
+    public enum PaymentType {
+        ONLINE_PAY(1, "在线支付");
+
+        private int code;
+        private String value;
+
+        PaymentType(int code, String value) {
+            this.code = code;
+            this.value = value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public static PaymentType codeOf(int code) {
+            for(PaymentType paymentType : values()) {
+                if(paymentType.getCode() == code) {
+                    return paymentType;
+                }
+            }
+            throw new RuntimeException("没有找到对应的枚举");
         }
     }
 }
