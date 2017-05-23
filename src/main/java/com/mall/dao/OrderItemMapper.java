@@ -20,5 +20,7 @@ public interface OrderItemMapper {
 
     List<OrderItem> getByOrderNumberUserId(@Param("orderNumber") Long orderNumber, @Param("userId") Integer userId);
 
+    List<OrderItem> getByOrderNumber(Long orderNumber);
+
     void batchInsert(List<OrderItem> orderItemList);
 }

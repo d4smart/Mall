@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +59,7 @@ public class OrderController {
         return iOrderService.cancel(user.getId(), orderNumber);
     }
 
-    @RequestMapping(value = "get_order_cart_product.do", method = RequestMethod.POST)
+    @RequestMapping(value = "get_order_cart_product.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse getOrderCartProduct(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -67,6 +68,30 @@ public class OrderController {
         }
 
         return iOrderService.getOrderCartProduct(user.getId());
+    }
+
+    @RequestMapping(value = "list.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse list(HttpSession session,
+                               @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+
+        return iOrderService.getOrderList(user.getId(), pageNum, pageSize);
+    }
+
+    @RequestMapping(value = "detail.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse detail(HttpSession session, Long orderNumber) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+
+        return iOrderService.getOrderDetail(user.getId(), orderNumber);
     }
 
     @RequestMapping(value = "pay.do", method = RequestMethod.POST)
