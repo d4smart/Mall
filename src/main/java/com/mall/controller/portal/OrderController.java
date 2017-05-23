@@ -47,6 +47,28 @@ public class OrderController {
         return iOrderService.createOrder(user.getId(), shippingId);
     }
 
+    @RequestMapping(value = "cancel.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse cancel(HttpSession session, Long orderNumber) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+
+        return iOrderService.cancel(user.getId(), orderNumber);
+    }
+
+    @RequestMapping(value = "get_order_cart_product.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse getOrderCartProduct(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+
+        return iOrderService.getOrderCartProduct(user.getId());
+    }
+
     @RequestMapping(value = "pay.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse pay(HttpSession session, long orderNumber, HttpServletRequest request) {

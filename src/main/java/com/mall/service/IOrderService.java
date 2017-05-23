@@ -18,4 +18,8 @@ public interface IOrderService {
     ServerResponse getPayStatus(Integer userId, Long orderNumber);
 
     ServerResponse createOrder(Integer userId, Integer shippingId);
+
+    ServerResponse<String> cancel(Integer userId, Long orderNumber);
+
+    ServerResponse getOrderCartProduct(Integer userId);
 }
