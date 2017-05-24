@@ -1,7 +1,5 @@
 package com.mall.vo;
 
-import com.mall.pojo.OrderItem;
-
 import java.math.BigDecimal;
 import java.util.List;
 
