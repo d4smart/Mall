@@ -2,6 +2,7 @@
 
 # properties file
 *.properties
+logback.xml
 
 # package file
 *.jar
