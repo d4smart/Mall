@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
- * Created by geely
+ * Created by d4smart
  */
 public class PropertiesUtil {
 
@@ -21,24 +21,23 @@ public class PropertiesUtil {
         String fileName = "mall.properties";
         properties = new Properties();
         try {
-            properties.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
+            properties.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName), "UTF-8"));
         } catch (IOException e) {
-            logger.error("配置文件读取异常",e);
+            logger.error("配置文件读取异常", e);
         }
     }
 
-    public static String getProperty(String key){
+    public static String getProperty(String key) {
         String value = properties.getProperty(key.trim());
-        if(StringUtils.isBlank(value)){
+        if(StringUtils.isBlank(value)) {
             return null;
         }
         return value.trim();
     }
 
-    public static String getProperty(String key,String defaultValue){
-
+    public static String getProperty(String key, String defaultValue) {
         String value = properties.getProperty(key.trim());
-        if(StringUtils.isBlank(value)){
+        if(StringUtils.isBlank(value)) {
             value = defaultValue;
         }
         return value.trim();

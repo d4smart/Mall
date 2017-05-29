@@ -1,7 +1,9 @@
 package com.mall.common;
 
 /**
- * Created by d4smart on 2017/5/8.
+ * @author d4smart
+ * @email d4smart@foxmail.com
+ * Created on 2017/5/8 12:46.
  */
 public enum ResponseCode {
     SUCCESS(0, "SUCCESS"),
